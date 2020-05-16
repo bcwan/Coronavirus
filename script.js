@@ -13,7 +13,7 @@ const fetchRetry = async (n = 0) => {
 
   try {
     const response = await fetch(apiURL, requestOptions);
-    return response.ok ? response.text() : fetchRetury(n + 1);
+    return response.ok ? response.text() : fetchRetry(n + 1);
   } catch (err) {
     console.log(err);
     return null;
