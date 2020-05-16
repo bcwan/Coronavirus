@@ -9,11 +9,16 @@ const fetchRetry = async (n = 0) => {
     redirect: "follow"
   }
 
+  const maxRetry = 15;
   const apiURL = `https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/${getDateString(n)}.csv`;
 
   try {
     const response = await fetch(apiURL, requestOptions);
-    return response.ok ? response.text() : fetchRetry(n + 1);
+    return response.ok ? 
+            response.text() : 
+            n + 1 < maxRetry ? 
+              fetchRetry(n + 1) : 
+              null;
   } catch (err) {
     console.log(err);
     return null;
