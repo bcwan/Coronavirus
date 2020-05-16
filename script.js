@@ -22,7 +22,18 @@ const fetchRetry = async (n = 0) => {
 
 const getDateString = (n) => {
   //return mm-dd-yyy
-  const date = new Date(Date.now() - daysToMS(n))
+  const date = new Date(Date.now() - daysToMilliseconds(n));
+  const format = new Intl.DateTimeFormat("en", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  })
 
+  const [month,,day,,year] = format.formatToParts(date);
+  return `${month.value}-${day.value}-${year.value}`;
+}
+
+const daysToMilliseconds = (n) => {
+  return n * 24 * 60 * 60 * 1000;
 }
 
